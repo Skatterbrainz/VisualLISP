@@ -1,0 +1,56 @@
+; return associated entity code value
+
+(defun DXF (dxfc elst)
+	(cond
+		( (listp elst) (cdr (assoc dxfc elst)))
+		( (= (type elst) 'ENAME) (cdr (assoc dxfc (entget elst))))
+		( (= (type elst) 'VLA-OBJECT) (cdr (assoc dxfc (entget (Get-Ename elst)))))
+		( T (cdr (assoc dxfc elst)))
+	)
+)
+
+; convert vla-object into ename
+
+(defun Get-Ename 
+  (object)
+  (if (Is-vla-Object object)
+    (vlax-vla-Object->Ename object)
+    object
+  )
+)
+
+; convert ename to vla-object
+
+(defun Get-Object (ename)
+	(cond
+	  ( (= (type e) 'ENAME)
+			(vlax-Ename->vla-Object ename)
+		)
+		( T ename )
+	)
+)
+
+; assorted entity "get" functions
+
+(defun get-EntityType (elist) (DXF 0 elist) )
+
+(defun get-ArcRadius (elist) (DXF 40 elist) )
+(defun get-ArcCenterPoint (elist) (DXF 10 elist) )
+(defun get-ArcStartAngle (elist) (DXF 50 elist) )
+(defun get-ArcEndAngle (elist) (DXF 51 elist) )
+
+(defun get-CircleCenter (elist) (DXF 10 elist) )
+(defun get-CircleRadius (elist) (DXF 40 elist) )
+
+(defun get-LineStartpoint (elist) (DXF 10 elist) )
+(defun get-LineEndpoint (elist) (DXF 11 elist) )
+(defun get-LineAngle (elist) (angle (Get-LineStart elist) (Get-LineEnd elist)) )
+(defun get-LineLength (elist) (distance (Get-LineStart elist) (Get-LineEnd elist)) )
+(defun get-LineMidpoint (elist) (Get-MidPoint (Get-LineStart elist) (Get-LineEnd elist)) )
+
+(defun get-ObjLayer (elist) (DXF  8 elist) )
+(defun get-ObjColor (elist) (if (assoc 62 elist) (DXF 62 elist)) )
+(defun get-ObjLinetype (elist) (if (assoc  6 elist) (DXF  6 elist)) )
+(defun get-ObjThickness (elist) (if (assoc 39 elist) (DXF 39 elist)) )
+(defun get-ObjSpace (elist) (DXF 67 elist) )
+(defun Is-ObjType (obj typelist)	(member (get-EntityType obj) typelist) )
