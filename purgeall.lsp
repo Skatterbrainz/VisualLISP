@@ -1,6 +1,9 @@
-(vl-load-com)
-
+; command = c:purgeall
+; author  = David Stein
+; created = 2004.02.03
 ; purge all opened drawing sessions
+
+(vl-load-com)
 
 (defun C:PURGEALL ( / item cur)
   (princ "\nPurging all opened drawings...")
