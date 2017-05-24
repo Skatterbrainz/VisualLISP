@@ -1,14 +1,11 @@
-(defun List->VariantArray 
-  (ptsList datatype / arraySpace sArray)
-  (setq arraySpace
-    (vlax-make-safearray
-      (eval datatype)
-        (cons 0
-          (- (length ptsList) 1)
-        )
-      )
-    )
-  )
-  (setq sArray (vlax-safearray-fill arraySpace ptsList))
-  (vlax-make-variant sArray)
+(defun Convert-ListToVariantArray 
+	(ptsList datatype / arraySpace sArray)
+	(setq arraySpace
+		(vlax-Make-SafeArray
+			(eval datatype)
+			(cons 0 (- (length ptsList) 1))
+		)
+	)
+	(setq sArray (vlax-SafeArray-Fill arraySpace ptsList))
+	(vlax-Make-Variant sArray)
 )
