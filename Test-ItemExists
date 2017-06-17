@@ -1,0 +1,16 @@
+; returns T if item exists within object
+
+(defun Test-ItemExists (object item / result)
+  (if
+    (not
+      (vl-Catch-All-Error-p
+        (setq result
+          (vl-Catch-All-Apply 'vla-item
+            (list object item)
+          )
+        )
+      )
+    )
+    result
+  )
+)
