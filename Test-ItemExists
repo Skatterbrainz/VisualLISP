@@ -1,14 +1,27 @@
-; returns T if item exists within object
+; returns T if [item] exists within [object]
 
 (defun Test-ItemExists (object item / result)
   (if
     (not
       (vl-Catch-All-Error-p
         (setq result
-          (vl-Catch-All-Apply 'vla-item
+          (vl-Catch-All-Apply 'vla-Item
             (list object item)
           )
         )
+      )
+    )
+    result
+  )
+)
+
+; compacted form
+
+(defun Test-ItemExists (object item / result)
+  (if
+    (not
+      (vl-Catch-All-Error-p
+        (setq result (vl-Catch-All-Apply 'vla-Item (list object item)))
       )
     )
     result
