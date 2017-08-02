@@ -1,0 +1,12 @@
+(defun c:pointlink  ( / p1 p2)
+  (if (setq p1 (getpoint "\nStart point: "))
+    (progn
+      (while (setq p2 (getpoint p1 " next point: " ))
+	(command "line" p1 p2 "")
+	(command "circle" p2 1 "")
+	(setq p1 p2)
+      )
+    )
+  )
+  (princ)
+)
